@@ -1,36 +1,104 @@
-# Clean Architecture Template
+# Clean Architecture Solution
 
-What's included in the template?
+This solution follows Clean Architecture principles to build a maintainable and testable .NET application.
 
-- SharedKernel project with common Domain-Driven Design abstractions.
-- Domain layer with sample entities.
-- Application layer with abstractions for:
-  - CQRS
-  - Example use cases
-  - Cross-cutting concerns (logging, validation)
-- Infrastructure layer with:
-  - Authentication
-  - Permission authorization
-  - EF Core, PostgreSQL
-  - Serilog
-- Seq for searching and analyzing structured logs
-  - Seq is available at http://localhost:8081 by default
-- Testing projects
-  - Architecture testing
+## 🏗️ Architecture Overview
 
-I'm open to hearing your feedback about the template and what you'd like to see in future iterations.
+The solution is divided into these main layers:
 
-If you're ready to learn more, check out [**Pragmatic Clean Architecture**](https://www.milanjovanovic.tech/pragmatic-clean-architecture?utm_source=ca-template):
+```
+src/
+├── Web.Api           # API Endpoints, Controllers, DTOs
+├── Application       # Business Logic, Commands/Queries
+├── Infrastructure   # External Concerns (DB, Auth, etc.)
+├── Domain           # Business Entities and Rules
+└── SharedKernel     # Shared Components and Interfaces
+```
 
-- Domain-Driven Design
+## 🚀 Key Features
+
+- Clean Architecture implementation
+- CQRS pattern with MediatR
+- Domain-Driven Design (DDD) concepts
+- JWT Authentication
+- PostgreSQL with EF Core
+- FluentValidation
+- Domain Events
+
+## 🛠️ Technologies
+
+- .NET 8
+- Entity Framework Core
+- PostgreSQL
+- MediatR
+- FluentValidation
+- JWT Authentication
+- Docker support
+
+## 🏃‍♂️ Getting Started
+
+1. **Prerequisites**
+
+   - .NET 8 SDK
+   - Docker (for PostgreSQL)
+   - Visual Studio 2022/Rider
+
+2. **Setup Database**
+
+   ```powershell
+   docker-compose up -d
+   ```
+
+3. **Run Migrations**
+
+   ```powershell
+   dotnet ef database update --project src/Infrastructure --startup-project src/Web.Api
+   ```
+
+4. **Run the Application**
+   ```powershell
+   dotnet run --project src/Web.Api
+   ```
+
+## 📐 Architecture Decision Records
+
+See individual README files in each layer for specific guidelines and rules:
+
+- [Web.Api Layer](src/Web.Api/README.md)
+- [Application Layer](src/Application/README.md)
+- [Infrastructure Layer](src/Infrastructure/README.md)
+- [Domain Layer](src/Domain/README.md)
+- [SharedKernel](src/SharedKernel/README.md)
+
+## 📝 Code Conventions
+
+- **Naming**: Follow Microsoft's .NET naming conventions
+- **Database**: Uses snake_case for column names
+- **Commands/Queries**: Follow CQRS pattern with command/query separation
+- **Validation**: Uses FluentValidation in Application layer
+- **Error Handling**: Consistent error handling using Result pattern
+
+## 🔒 Security
+
+- JWT-based authentication
+- Password hashing using modern algorithms
 - Role-based authorization
-- Permission-based authorization
-- Distributed caching with Redis
-- OpenTelemetry
-- Outbox pattern
-- API Versioning
-- Unit testing
-- Functional testing
-- Integration testing
+- Input validation on all endpoints
 
-Stay awesome!
+## 📦 Project Structure Details
+
+Each feature (e.g., Todos, Users) follows vertical slice architecture:
+
+```
+Feature/
+├── Commands/          # Write operations
+│   └── Create/
+│       ├── Command.cs
+│       ├── Handler.cs
+│       └── Validator.cs
+└── Queries/           # Read operations
+    └── Get/
+        ├── Query.cs
+        ├── Handler.cs
+        └── Validator.cs
+```
